@@ -6,3 +6,9 @@ spring:
     name: chatting
   jackson:
     default-property-inclusion: non_null
+
+api:
+  talkplus:
+    url: https://api.talkplus.io/v1.4/api/users/create
+    app-id: ${APP-ID}
+    api-key: ${API-KEY}
