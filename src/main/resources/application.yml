@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: chatting
+  jackson:
+    default-property-inclusion: non_null
