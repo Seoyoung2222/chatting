@@ -1,5 +1,7 @@
 package com.example.chatting.domain.user.service;
 
+import com.example.chatting.domain.user.dto.UserLoginResponseDto;
+import com.example.chatting.domain.user.dto.UserLogoinRequestDto;
 import com.example.chatting.domain.user.dto.UserRequestDto;
 import com.example.chatting.domain.user.dto.UserResponseDto;
 import com.example.chatting.global.api.ApiProperties;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -39,4 +42,24 @@ public class UserService {
         return response.getBody();
     }
 
+    public UserLoginResponseDto login(UserLogoinRequestDto logoinRequestDto) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("app-id", apiProperties.getAppId());
+        headers.set("api-key", apiProperties.getApikey());
+
+        HttpEntity<UserLogoinRequestDto> reqeust = new HttpEntity<>(logoinRequestDto, headers);
+
+        try {
+            ResponseEntity<UserLoginResponseDto> response = restTemplate.exchange(
+                    apiProperties.getUrl()+"/users/login",
+                    HttpMethod.POST,
+                    reqeust,
+                    UserLoginResponseDto.class
+            );
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("로그인 실패"+e.getResponseBodyAsString(),e);
+        }
+    }
 }
