@@ -21,6 +21,8 @@ public class UserService {
     }
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
+        String apiUrl = apiProperties.getUrl() + "/users/create";
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("app-id", apiProperties.getAppId());
@@ -29,7 +31,7 @@ public class UserService {
         HttpEntity<UserRequestDto> request = new HttpEntity<>(userRequestDto, headers);
 
         ResponseEntity<UserResponseDto> response = restTemplate.exchange(
-                apiProperties.getUrl(),
+                apiUrl,
                 HttpMethod.POST,
                 request,
                 UserResponseDto.class

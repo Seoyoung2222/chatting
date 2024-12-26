@@ -9,6 +9,6 @@ spring:
 
 api:
   talkplus:
-    url: https://api.talkplus.io/v1.4/api/users/create
+    url: https://api.talkplus.io/v1.4/api
     app-id: ${APP-ID}
     api-key: ${API-KEY}
