@@ -62,4 +62,27 @@ public class UserService {
             throw new RuntimeException("로그인 실패"+e.getResponseBodyAsString(),e);
         }
     }
+
+    public UserResponseDto getUser(String userId) {
+        String apiUrl = apiProperties.getUrl() + "/users/" + userId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("app-id", apiProperties.getAppId());
+        headers.set("api-key", apiProperties.getApikey());
+
+        HttpEntity<Void> reqeust = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<UserResponseDto> response = restTemplate.exchange(
+                    apiUrl,
+                    HttpMethod.GET,
+                    reqeust,
+                    UserResponseDto.class
+            );
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("사용자 조회 실패: "+ e.getResponseBodyAsString(),e);
+        }
+    }
 }
