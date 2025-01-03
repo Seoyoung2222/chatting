@@ -16,7 +16,7 @@ public class UserResponseDto {
         private String profileImageUrl;
         private boolean disablePushNotification;
         private Map<String, String> data;
-        private Long updateAt;
-        private Long createAt;
+        private Long updatedAt;
+        private Long createdAt;
     }
 }
